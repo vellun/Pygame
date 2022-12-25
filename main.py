@@ -4,6 +4,7 @@ from load import load_image, load_level
 
 FPS = 50
 WIDTH, HEIGHT = 500, 500
+LEVEL = load_level(input('Введите файл уровня: '))
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Перемещение героя')
@@ -44,8 +45,7 @@ class Player(pygame.sprite.Sprite):
     def move(self, direction_x, direction_y):
         new_x, new_y = self.rect.x + tile_width * direction_x, self.rect.y + tile_width * direction_y
 
-        level = load_level('level.txt')
-        if level[new_y // tile_width][new_x // tile_width] == '.' or level[new_y // tile_width][
+        if LEVEL[new_y // tile_width][new_x // tile_width] == '.' or LEVEL[new_y // tile_width][
             new_x // tile_width] == '@':
             self.rect.x += tile_width * direction_x
             self.rect.y += tile_width * direction_y
@@ -102,7 +102,7 @@ def start_screen():
 
 
 def game():
-    hero, max_x, max_y = generate_level(load_level('level.txt'))
+    hero, max_x, max_y = generate_level(LEVEL)
     while True:
         screen.fill('white')
         for event in pygame.event.get():
